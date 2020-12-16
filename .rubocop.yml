@@ -1,4 +1,7 @@
 AllCops:
+  Exclude:
+    - bin/**/*
+    - config/**/*
   NewCops: enable
 Style/FrozenStringLiteralComment:
   Enabled: false
