@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "bundle exec puma -C config/puma.rb"
+    ports:
+    - "4000:4000"
+    volumes:
+    - .:/app
+    - remanent_api_ruby_gems:/gems
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      BUNDLE_PATH: /gems
+      GEM_HOME: /gems
+      PORT: 4000
+    tty: true
+    stdin_open: true
+    links:
+    - db
+
+  db:
+    image: "postgres:13"
+    ports:
+    - "5440:5432"
+    volumes:
+    - remanent_api_ruby_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+volumes:
+  remanent_api_ruby_gems:
+  remanent_api_ruby_db:
