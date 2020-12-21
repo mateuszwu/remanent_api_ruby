@@ -11,6 +11,26 @@ module Api
         end
       end
 
+      def show
+        product = Product.find_by(barcode: params[:barcode])
+
+        if product
+          render json: ProductSerializer.new(product).to_json, status: :ok
+        else
+          head :not_found
+        end
+      end
+
+      def update
+        product = Product.find_by(barcode: params[:barcode])
+
+        if product.update(product_params)
+          render json: ProductSerializer.new(product).to_json, status: :ok
+        else
+          render json: ErrorSerializer.new(product).to_json, status: :bad_request
+        end
+      end
+
       private
 
       def product_params
