@@ -22,7 +22,7 @@ describe 'Api::V1::ProductsController', type: :request do
       end
     end
 
-    context 'when require fields are blank' do
+    context 'when requiredfields are blank' do
       it 'returns an error message' do
         params = { product: { barcode: nil, name: nil, unit: nil } }
 
@@ -119,9 +119,9 @@ describe 'Api::V1::ProductsController', type: :request do
       end
     end
 
-    context 'when require fields are blank' do
+    context 'when requiredfields are blank' do
       it 'returns an error message' do
-        product = create(:product, barcode: 123_456, name: 'Water', unit: 'szt.')
+        create(:product, barcode: 123_456, name: 'Water', unit: 'szt.')
         params = { product: { barcode: '123456', name: nil, unit: nil } }
 
         patch('/api/v1/products/123456', params: params)
