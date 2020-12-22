@@ -10,16 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_201_215_212_455) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+ActiveRecord::Schema.define(version: 2020_12_21_212236) do
 
-  create_table 'products', force: :cascade do |t|
-    t.string 'barcode', default: '', null: false
-    t.string 'name', default: '', null: false
-    t.string 'unit', default: 'szt.', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.index ['barcode'], name: 'index_products_on_barcode', unique: true
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "inventories", force: :cascade do |t|
+    t.decimal "quantity", precision: 18, scale: 2, default: "0.0", null: false
+    t.decimal "price", precision: 18, scale: 2, default: "0.0", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_inventories_on_product_id", unique: true
   end
+
+  create_table "products", force: :cascade do |t|
+    t.string "barcode", default: "", null: false
+    t.string "name", default: "", null: false
+    t.string "unit", default: "szt.", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["barcode"], name: "index_products_on_barcode", unique: true
+  end
+
+  add_foreign_key "inventories", "products"
 end
