@@ -94,6 +94,31 @@ describe 'Api::V1::ProductsController', type: :request do
     end
   end
 
+  describe 'GET api/v1/products' do
+    it 'returns all products' do
+      product = create(:product, barcode: 123_456, name: 'Water', unit: 'szt.')
+      product2 = create(:product, barcode: 654_321, name: 'Cola', unit: 'szt.')
+
+      get('/api/v1/products')
+
+      expect(response).to have_http_status(:ok)
+      expect(json_body).to match(
+        'data' => [
+          {
+            'id' => product.id.to_s,
+            'type' => 'product',
+            'attributes' => { 'barcode' => '123456', 'name' => 'Water', 'unit' => 'szt.' }
+          },
+          {
+            'id' => product2.id.to_s,
+            'type' => 'product',
+            'attributes' => { 'barcode' => '654321', 'name' => 'Cola', 'unit' => 'szt.' }
+          }
+        ]
+      )
+    end
+  end
+
   describe 'PATCH api/v1/products' do
     context 'when params are valid' do
       it 'updates a product' do

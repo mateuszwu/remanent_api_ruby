@@ -11,6 +11,10 @@ module Api
         end
       end
 
+      def index
+        render json: ProductSerializer.new(Product.all).to_json, status: :ok
+      end
+
       def show
         product = Product.find_by(barcode: params[:barcode])
 
