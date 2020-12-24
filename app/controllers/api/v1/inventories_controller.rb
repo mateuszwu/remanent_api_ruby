@@ -11,6 +11,12 @@ module Api
         end
       end
 
+      def show
+        inventory = Product.find_by(barcode: params[:barcode]).inventory
+        
+        render json: InventorySerializer.new(inventory, { include: [:product] }).to_json, status: :ok
+      end
+
       def index
         render json: InventorySerializer.new(Inventory.all, { include: [:product] }).to_json, status: :ok
       end
