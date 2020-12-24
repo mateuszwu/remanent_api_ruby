@@ -81,5 +81,4 @@ test:
 production:
   <<: *default
   database: remanent_api_ruby_production
-  username: remanent_api_ruby
-  password: <%= ENV['REMANENT_API_RUBY_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
