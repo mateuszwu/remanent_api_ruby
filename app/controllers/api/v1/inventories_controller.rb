@@ -18,7 +18,7 @@ module Api
       end
 
       def index
-        render json: InventorySerializer.new(Inventory.all.includes(:product), { include: [:product] }).to_json, status: :ok
+        render json: InventorySerializer.new(Inventory.includes(:product).order('products.name'), { include: [:product] }).to_json, status: :ok
       end
 
       def update
