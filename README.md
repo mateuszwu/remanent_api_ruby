@@ -1,24 +1,14 @@
-# README
+# How to Setup App
+- Create DB on render.com
+- Attach DB to the app on the Heroku - set db url variable
+- Run: `rails db:migrate`, `rails db:seed`
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## TODO after each year
+- dump db from render.com `pg_dump RENDER_COM_EXTERNAL_DB_URL > db/render_db_dump`
+- Save it on a new branch `render_db_dump_YEAR`
+- Check for new `products` and add them to the seeds.
+```
+Product.all.each do |product|
+  puts "{ barcode: %{#{product.barcode}}, name: %{#{product.name}}, unit: %{#{product.unit}} },"
+end
+```
